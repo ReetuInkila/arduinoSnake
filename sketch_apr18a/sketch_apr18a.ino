@@ -31,7 +31,7 @@ void loop() {
     directionX = 0;
     directionY = -1;
   }
-  delay(2000);
+  delay(1000);
 
   step();
 
@@ -45,6 +45,16 @@ void loop() {
 void step(){
   locationX = locationX + directionX;
   locationY = locationY + directionY;
+  if( locationX > d){
+    locationX = 1;
+  }else if(locationX < 1) {
+    locationX = d;
+  }
+  if( locationY > d){
+    locationY = 1;
+  }else if(locationY < 1) {
+    locationY = d;
+  }
 }
 
 
