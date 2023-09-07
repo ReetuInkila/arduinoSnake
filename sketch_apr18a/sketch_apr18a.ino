@@ -18,16 +18,16 @@ void loop() {
   xValue = analogRead(VRX_PIN);
   yValue = analogRead(VRY_PIN);
 
-  if(xValue > 600){
+  if(xValue > 600 && directionX == 0){
     directionX = 1;
     directionY = 0;
-  }else if (xValue < 400){
+  }else if (xValue < 400 && directionX == 0){
     directionX = -1;
     directionY = 0;
-  }else if (yValue > 600){
+  }else if (yValue > 600 && directionY == 0){
     directionX = 0;
     directionY = 1;
-  }else if (yValue < 400){
+  }else if (yValue < 400 && directionY == 0){
     directionX = 0;
     directionY = -1;
   }
