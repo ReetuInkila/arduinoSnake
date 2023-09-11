@@ -54,7 +54,7 @@ void loop() {
     directionX = 0;
     directionY = -1;
   }
-  delay(1000);
+  delay(500);
 
   step();
   drawSnake();
@@ -83,11 +83,13 @@ void step(){
 }
 
 void drawSnake(){
-  myScreen.stroke(0,0,0); // set the stroke color to white
-  myScreen.point(prevLocX * scaleX, prevLocY * scaleY);
+  //myScreen.stroke(0,0,0); // set the stroke color to white
+  //myScreen.fill(0, 0, 0);
+  //myScreen.circle(prevLocX * scaleX, prevLocY * scaleY, 2); // Clear previous segment
 
-  myScreen.stroke(255,255,255);
-  myScreen.point(locationX * scaleX, locationY * scaleY);
+  myScreen.stroke(255, 255, 255);
+  myScreen.fill(255, 255, 255); 
+  myScreen.circle(locationX * scaleX, locationY * scaleY, 2); // Draw new segment
   
 }
 
