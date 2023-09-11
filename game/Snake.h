@@ -1,17 +1,23 @@
-#include <vector>
+#include <ArduinoSTL.h>
 #include <utility>
-#include <random>
+
 
 class Snake {
 public:
     Snake() : score(0) {}
 
+    void start(int x, int y){
+        // TODO: Make sure that coordinates are empty
+        coordinates.insert(coordinates.begin(), std::make_pair(x, y));
+        addPoint();
+    }
+
     // Lisää uuden kerättävän pisteen
     void addPoint(int x, int y) {
         int x, y;
         do {
-            x = generateRandomCoordinate();
-            y = generateRandomCoordinate();
+            x = random(26);
+            y = random(26);
         } while (isCoordinateInSnake(x, y));
 
         point = std::make_pair(x, y);
@@ -20,6 +26,10 @@ public:
     // Aseta pistemäärä
     void setScore(int newScore) {
         score =+ newScore;
+    }
+
+    pair<int, int> getPoint(){
+        return point;
     }
 
     // Palauta pistemäärä
@@ -39,14 +49,6 @@ private:
     std::vector<std::pair<int, int>> coordinates; // Kordinaatit
     std::pair<int, int> point; // pisteen kordinaatit
     int score; // Pistemäärä
-    
-    // Arpoo satunnaisen kordinaatin kentän sisällä (0 - 25)
-    int generateRandomCoordinate() {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<int> dis(0, 25);
-        return dis(gen);
-    }
 
     // Tarkista, onko annettu kordinaatti jo käärmeen kordinaattien joukossa
     bool isCoordinateInSnake(int x, int y) {
