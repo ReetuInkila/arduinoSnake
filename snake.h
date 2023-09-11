@@ -1,5 +1,6 @@
 #include <vector>
 #include <utility>
+#include <random>
 
 class Snake {
 public:
@@ -18,7 +19,7 @@ public:
 
     // Aseta pistemäärä
     void setScore(int newScore) {
-        score = newScore;
+        score =+ newScore;
     }
 
     // Palauta pistemäärä
@@ -45,7 +46,7 @@ private:
         std::mt19937 gen(rd());
         std::uniform_int_distribution<int> dis(0, 25);
         return dis(gen);
-    };
+    }
 
     // Tarkista, onko annettu kordinaatti jo käärmeen kordinaattien joukossa
     bool isCoordinateInSnake(int x, int y) {
@@ -56,3 +57,4 @@ private:
         }
         return false;
     }
+};
