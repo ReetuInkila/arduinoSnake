@@ -21,7 +21,7 @@ int directionX = 1;
 int directionY = 0;
 
 Pair<int, int> point;
-
+LinkedList<Pair<int, int>> snake;
 
 // Screen settings, dimensions and scaling constants
 #define CS   10
@@ -89,9 +89,25 @@ void step(){
 }
 
 void drawSnake(){
+  myScreen.background(0,0,0); // clear the screen
   point = game.getPoint();
+  snake = game.getSnake();
   myScreen.stroke(255, 255, 255);
   myScreen.circle(point.first * scaleX, point.second* scaleY, 2);
+
+  for (const Pair<int, int>& coordinate : snake) {
+    int x = coordinate.first;
+    int y = coordinate.second;
+
+    // Calculate the screen coordinates based on the snake's coordinates and scaling factors
+    int screenX = x * scaleX;
+    int screenY = y * scaleY;
+
+    // Draw a circle for each point of the snake's body
+    myScreen.stroke(255, 255, 255);
+    myScreen.fill(255, 255, 255);
+    myScreen.circle(screenX, screenY, 2);
+  }
 
   myScreen.stroke(0,0,0); // set the stroke color to white
   myScreen.fill(0, 0, 0);

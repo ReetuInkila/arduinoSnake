@@ -40,7 +40,8 @@ public:
     // Siirrä käärmettä eli poista piste lopusta ja lisää alkuun
     void moveSnake(int newX, int newY) {
       //if (!coordinates.empty()) { 
-      //TODO: implement is empty method and chek
+      //TODO: implement is empty method and check
+      // BUG: fisrt colledted point doesnt appear to lenght of snake
       if (newX == point.first && newY == point.second){
         coordinates.insert(Pair<int, int>(newX, newY));
         addPoint();
@@ -48,6 +49,11 @@ public:
         coordinates.insert(Pair<int, int>(newX, newY));
         coordinates.removeLast();
       }
+    }
+
+    // Function to get the snake's body as a list of coordinates
+    LinkedList<Pair<int, int>> getSnake() {
+      return coordinates;
     }
 
 private:
