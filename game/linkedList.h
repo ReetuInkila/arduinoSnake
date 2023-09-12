@@ -61,5 +61,21 @@ class LinkedList  {
       }
     }
 
+    // Method to iterate through the list and apply a function to each element
+    // TODO: Check whether the method is functional and secure
+    template <typename Function>
+    void iterate(Function func) const {
+      ListNode<T>* current = head;
+
+      while (current != nullptr) {
+        // Apply the provided function to the current node's element
+        func(current->element);
+          // Move to the next node
+          current = current->next;
+      }
+    }
+
+    // TODO: Create method to empty whole list
+
 };
 #endif // LinkedList_hpp
