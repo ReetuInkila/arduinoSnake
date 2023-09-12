@@ -1,4 +1,4 @@
-#include <ArduinoSTL.h>
+#include "linkedList.h"
 #include <utility>
 
 
@@ -8,7 +8,7 @@ public:
 
     void start(int x, int y){
         // TODO: Make sure that coordinates are empty
-        coordinates.insert(coordinates.begin(), std::make_pair(x, y));
+        coordinates.insert(std::make_pair(x, y));
         addPoint();
     }
 
@@ -28,7 +28,7 @@ public:
         score =+ newScore;
     }
 
-    pair<int, int> getPoint(){
+    std::pair<int, int> getPoint(){
         return point;
     }
 
@@ -39,14 +39,15 @@ public:
 
     // Siirrä käärmettä eli poista piste lopusta ja lisää alkuun
     void moveSnake(int newX, int newY) {
-        if (!coordinates.empty()) {
-            coordinates.insert(coordinates.begin(), std::make_pair(newX, newY));
-            coordinates.pop_back();
-        }
+        //if (!coordinates.empty()) { 
+            //TODO: implement is empty method and chek
+            coordinates.insert(std::make_pair(newX, newY));
+            coordinates.removeLast();
+        //}
     }
 
 private:
-    std::vector<std::pair<int, int>> coordinates; // Kordinaatit
+    LinkedList coordinates; // Kordinaatit
     std::pair<int, int> point; // pisteen kordinaatit
     int score; // Pistemäärä
 
