@@ -1,6 +1,6 @@
 #include <TFT.h> 
 #include <SPI.h>
-#include <utility>
+#include "Pair.h"
 #include "Snake.h"
 
 
@@ -33,7 +33,7 @@ int prevLocY = 0;
 int directionX = 1;
 int directionY = 0;
 
-std::pair<int, int> point;
+pair point;
 
 
 void setup() {

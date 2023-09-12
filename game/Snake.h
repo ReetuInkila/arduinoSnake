@@ -1,5 +1,5 @@
 #include "linkedList.h"
-#include <utility>
+#include "Pair.h"
 
 
 class Snake {
@@ -8,19 +8,19 @@ public:
 
     void start(int x, int y){
         // TODO: Make sure that coordinates are empty
-        coordinates.insert(std::make_pair(x, y));
+        coordinates.insert(Pair<int, int> (x, y));
         addPoint();
     }
 
     // Lisää uuden kerättävän pisteen
-    void addPoint(int x, int y) {
+    void addPoint() {
         int x, y;
         do {
             x = random(26);
             y = random(26);
         } while (isCoordinateInSnake(x, y));
 
-        point = std::make_pair(x, y);
+        point = Pair<int, int> (x, y);
     }
 
     // Aseta pistemäärä
@@ -28,7 +28,7 @@ public:
         score =+ newScore;
     }
 
-    std::pair<int, int> getPoint(){
+    Pair<int, int> getPoint(){
         return point;
     }
 
@@ -41,14 +41,14 @@ public:
     void moveSnake(int newX, int newY) {
         //if (!coordinates.empty()) { 
             //TODO: implement is empty method and chek
-            coordinates.insert(std::make_pair(newX, newY));
+            coordinates.insert(Pair<int, int>(newX, newY));
             coordinates.removeLast();
         //}
     }
 
 private:
-    LinkedList coordinates; // Kordinaatit
-    std::pair<int, int> point; // pisteen kordinaatit
+    LinkedList<Pair<int, int>> coordinates; // Kordinaatit
+    Pair<int, int> point; // pisteen kordinaatit
     int score; // Pistemäärä
 
     // Tarkista, onko annettu kordinaatti jo käärmeen kordinaattien joukossa
