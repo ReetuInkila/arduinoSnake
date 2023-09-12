@@ -62,7 +62,7 @@ class LinkedList  {
     }
 
     // Method to iterate through the list and apply a function to each element
-    // TODO: Check whether the method is functional and secure
+    // @todo Check whether the method is functional and secure
     template <typename Function>
     void iterate(Function func) const {
       ListNode<T>* current = head;
@@ -75,7 +75,7 @@ class LinkedList  {
       }
     }
 
-    // TODO: Create method to empty whole list
+    // @todo Create method to empty whole list
 
 };
 #endif // LinkedList_hpp
