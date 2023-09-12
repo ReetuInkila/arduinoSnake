@@ -67,11 +67,6 @@ void loop() {
   delay(500);
 
   step();
-  
-  Serial.print("x = ");
-  Serial.print(locationX);
-  Serial.print(", y = ");
-  Serial.println(locationY);
  
 }
 

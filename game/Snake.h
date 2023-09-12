@@ -39,11 +39,15 @@ public:
 
     // Siirrä käärmettä eli poista piste lopusta ja lisää alkuun
     void moveSnake(int newX, int newY) {
-        //if (!coordinates.empty()) { 
-            //TODO: implement is empty method and chek
-            coordinates.insert(Pair<int, int>(newX, newY));
-            coordinates.removeLast();
-        //}
+      //if (!coordinates.empty()) { 
+      //TODO: implement is empty method and chek
+      if (newX == point.first && newY == point.second){
+        coordinates.insert(Pair<int, int>(newX, newY));
+        addPoint();
+      }else {
+        coordinates.insert(Pair<int, int>(newX, newY));
+        coordinates.removeLast();
+      }
     }
 
 private:
