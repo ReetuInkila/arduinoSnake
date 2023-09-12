@@ -63,18 +63,41 @@ class LinkedList  {
 
     // Method to iterate through the list and apply a function to each element
     // TODO: Check whether the method is functional and secure
-    template <typename Function>
-    void iterate(Function func) const {
-      ListNode<T>* current = head;
+    class Iterator {
+    private:
+      ListNode<T>* current;
 
-      while (current != nullptr) {
-        // Apply the provided function to the current node's element
-        func(current->element);
-          // Move to the next node
-          current = current->next;
+    public:
+      Iterator(ListNode<T>* startNode) : current(startNode) {}
+
+      // Overload the * operator to access the current element
+      T& operator*() {
+        return current->element;
       }
+
+      // Overload the ++ operator to move to the next element
+      Iterator& operator++() {
+        if (current != nullptr) {
+          current = current->next;
+        }
+        return *this;
+      }
+
+      // Overload the != operator to check for inequality
+      bool operator!=(const Iterator& other) const {
+        return current != other.current;
+      }
+    };
+
+    // Method to get an iterator pointing to the beginning of the list
+    Iterator begin() {
+        return Iterator(head);
     }
 
+    // Method to get an iterator pointing to the end of the list
+    Iterator end() {
+        return Iterator(nullptr);
+    }
     // TODO: Create method to empty whole list
 
 };

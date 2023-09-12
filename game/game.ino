@@ -3,19 +3,6 @@
 #include "Pair.h"
 #include "Snake.h"
 
-
-// Screen settings, dimensions and scaling constants
-#define CS   10
-#define DC   7
-#define RESET  8
-TFT myScreen = TFT(CS, DC, RESET);
-
-const int screenWidth = 100; // Pixels
-const int screenHeight = 100; // Pixels
-
-const int scaleX = screenWidth / d;
-const int scaleY = screenHeight / d;
-
 // Controller settings and variables
 #define VRX_PIN  A0 // Arduino pin connected to VRX pin
 #define VRY_PIN  A1 // Arduino pin connected to VRY pin
@@ -33,7 +20,21 @@ int prevLocY = 0;
 int directionX = 1;
 int directionY = 0;
 
-pair point;
+Pair<int, int> point;
+
+
+// Screen settings, dimensions and scaling constants
+#define CS   10
+#define DC   7
+#define RESET  8
+TFT myScreen = TFT(CS, DC, RESET);
+
+const int screenWidth = 100; // Pixels
+const int screenHeight = 100; // Pixels
+
+const int scaleX = screenWidth / d;
+const int scaleY = screenHeight / d;
+
 
 
 void setup() {
@@ -95,7 +96,7 @@ void step(){
 void drawSnake(){
   point = game.getPoint();
   myScreen.stroke(255, 255, 255);
-  myScreen.circle(point.first * scaleX, point.last* scaleY, 2);
+  myScreen.circle(point.first * scaleX, point.second* scaleY, 2);
 
   myScreen.stroke(0,0,0); // set the stroke color to white
   myScreen.fill(0, 0, 0);
