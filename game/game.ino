@@ -34,8 +34,13 @@ LinkedList<Pair<int, int>> snake;
 #define LCD_RD A0 // LCD Read goes to Analog 0
 Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
-const int screenWidth = 100; // Pixels
-const int screenHeight = 100; // Pixels
+#define	BLACK   0x0000
+#define	BLUE    0x001F
+#define	RED     0xF800
+#define WHITE   0xFFFF
+
+const int screenWidth = 240; // Pixels
+const int screenHeight = 240; // Pixels
 
 const int scaleX = screenWidth / d;
 const int scaleY = screenHeight / d;
@@ -45,6 +50,9 @@ const int scaleY = screenHeight / d;
 void setup() {
   Serial.begin(9600) ;
   game.start(locationX,locationY);
+  tft.reset();
+  uint16_t identifier = tft.readID();
+  tft.begin(identifier);
   tft.fillScreen(0); // Clear the screen
 }
 
@@ -93,10 +101,10 @@ void step(){
 }
 
 void drawSnake(){
-  tft.fillScreen(0); // Clear the screen
+  tft.fillScreen(WHITE); // Clear the screen
   point = game.getPoint();
   snake = game.getSnake();
-  tft.fillCircle(point.first * scaleX, point.second* scaleY, 2, tft.color565(255, 255, 255));
+  tft.fillCircle(point.first * scaleX, point.second* scaleY, 4, BLACK);
 
   for (const Pair<int, int>& coordinate : snake) {
     int x = coordinate.first;
@@ -109,7 +117,8 @@ void drawSnake(){
     Serial.println(y);
 
     // Draw a circle for each point of the snake's body
-    tft.fillCircle(screenX, screenY, 2, tft.color565(255, 255, 255));
+    tft.fillCircle(screenX, screenY, 4, BLACK);
+    
   }
   
 }
