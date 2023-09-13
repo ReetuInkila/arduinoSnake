@@ -1,14 +1,17 @@
-#include <TFT.h> 
-#include <SPI.h>
+
+#include <Adafruit_GFX.h>    // Core graphics library
+#include <Adafruit_TFTLCD.h> // Hardware-specific library
 #include "Pair.h"
 #include "Snake.h"
 
 // Controller settings and variables
-#define VRX_PIN  A0 // Arduino pin connected to VRX pin
-#define VRY_PIN  A1 // Arduino pin connected to VRY pin
+#define VRX_PIN  A4 // Arduino pin connected to VRX pin
+#define VRY_PIN  A5 // Arduino pin connected to VRY pin
+#define SW_PIN   10  // Arduino pin connected to SW  pin
 
 int xValue = 0; // To store value of the controller X axis
 int yValue = 0; // To store value of the controller Y axis
+
 
 // Game variables
 Snake game;
@@ -24,10 +27,12 @@ Pair<int, int> point;
 LinkedList<Pair<int, int>> snake;
 
 // Screen settings, dimensions and scaling constants
-#define CS   10
-#define DC   7
-#define RESET  8
-TFT myScreen = TFT(CS, DC, RESET);
+#define LCD_RESET A4 // Define the RESET pin number
+#define LCD_CS A3 // Chip Select goes to Analog 3
+#define LCD_CD A2 // Command/Data goes to Analog 2
+#define LCD_WR A1 // LCD Write goes to Analog 1
+#define LCD_RD A0 // LCD Read goes to Analog 0
+Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
 const int screenWidth = 100; // Pixels
 const int screenHeight = 100; // Pixels
@@ -40,8 +45,7 @@ const int scaleY = screenHeight / d;
 void setup() {
   Serial.begin(9600) ;
   game.start(locationX,locationY);
-  myScreen.begin();
-  myScreen.background(0,0,0); // clear the screen
+  tft.fillScreen(0); // Clear the screen
 }
 
 void loop() {
@@ -89,11 +93,10 @@ void step(){
 }
 
 void drawSnake(){
-  myScreen.background(0,0,0); // clear the screen
+  tft.fillScreen(0); // Clear the screen
   point = game.getPoint();
   snake = game.getSnake();
-  myScreen.stroke(255, 255, 255);
-  myScreen.circle(point.first * scaleX, point.second* scaleY, 2);
+  tft.fillCircle(point.first * scaleX, point.second* scaleY, 2, tft.color565(255, 255, 255));
 
   for (const Pair<int, int>& coordinate : snake) {
     int x = coordinate.first;
@@ -102,20 +105,12 @@ void drawSnake(){
     // Calculate the screen coordinates based on the snake's coordinates and scaling factors
     int screenX = x * scaleX;
     int screenY = y * scaleY;
+    Serial.print(x);
+    Serial.println(y);
 
     // Draw a circle for each point of the snake's body
-    myScreen.stroke(255, 255, 255);
-    myScreen.fill(255, 255, 255);
-    myScreen.circle(screenX, screenY, 2);
+    tft.fillCircle(screenX, screenY, 2, tft.color565(255, 255, 255));
   }
-
-  myScreen.stroke(0,0,0); // set the stroke color to white
-  myScreen.fill(0, 0, 0);
-  myScreen.circle(prevLocX * scaleX, prevLocY * scaleY, 2); // Clear previous segment
-
-  myScreen.stroke(255, 255, 255);
-  myScreen.fill(255, 255, 255); 
-  myScreen.circle(locationX * scaleX, locationY * scaleY, 2); // Draw new segment
   
 }
 
