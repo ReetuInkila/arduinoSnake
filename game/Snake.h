@@ -41,7 +41,6 @@ public:
     void moveSnake(int newX, int newY) {
       //if (!coordinates.empty()) { 
       //TODO: implement is empty method and check
-      // BUG: fisrt colledted point doesnt appear to lenght of snake
       if (newX == point.first && newY == point.second){
         coordinates.insert(Pair<int, int>(newX, newY));
         addPoint();

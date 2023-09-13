@@ -59,6 +59,7 @@ void setup() {
 void loop() {
   drawSnake();
 
+  // BUG: snake doenst keep direction after turn
   // read analog X and Y analog values
   xValue = analogRead(VRX_PIN);
   yValue = analogRead(VRY_PIN);
