@@ -25,6 +25,7 @@ int directionY = 0;
 
 Pair<int, int> point;
 LinkedList<Pair<int, int>> snake;
+Pair<int, int> removable = Pair<int, int>(-1,-1);
 
 // Screen settings, dimensions and scaling constants
 #define LCD_RESET 0 // Define the RESET pin number
@@ -98,11 +99,13 @@ void step(){
   }else if(locationY < 1) {
     locationY = d;
   }
-  game.moveSnake(locationX, locationY);
+  removable = game.moveSnake(locationX, locationY);
 }
 
 void drawSnake(){
-  //tft.fillScreen(WHITE); // Clear the screen
+  tft.fillCircle(removable.first * scaleX, removable.second* scaleY, 4, WHITE); // Clear the screen
+
+
   point = game.getPoint();
   snake = game.getSnake();
   tft.fillCircle(point.first * scaleX, point.second* scaleY, 4, BLACK);

@@ -44,6 +44,15 @@ class LinkedList  {
       length++;
     }
 
+    Pair<int, int> getLast(){
+      if (tail != nullptr) {
+        return tail->element; // Assuming tail->element is a Pair<int, int>
+      } else {
+        // Handle the case when the list is empty, e.g., return a default Pair
+        return Pair<int, int>(); // Default-constructed Pair
+      }
+    }
+
      // Method to remove the last item from the list
     void removeLast() {
       if (tail != nullptr) {
