@@ -27,7 +27,7 @@ Pair<int, int> point;
 LinkedList<Pair<int, int>> snake;
 
 // Screen settings, dimensions and scaling constants
-#define LCD_RESET A4 // Define the RESET pin number
+#define LCD_RESET 0 // Define the RESET pin number
 #define LCD_CS A3 // Chip Select goes to Analog 3
 #define LCD_CD A2 // Command/Data goes to Analog 2
 #define LCD_WR A1 // LCD Write goes to Analog 1
@@ -53,13 +53,13 @@ void setup() {
   tft.reset();
   uint16_t identifier = tft.readID();
   tft.begin(identifier);
-  tft.fillScreen(0); // Clear the screen
+  tft.fillScreen(WHITE); // Clear the screen
+  tft.drawRect(0, 0, screenWidth, screenHeight, RED);
 }
 
 void loop() {
   drawSnake();
 
-  // BUG: snake doenst keep direction after turn
   // read analog X and Y analog values
   xValue = analogRead(VRX_PIN);
   yValue = analogRead(VRY_PIN);
@@ -102,7 +102,7 @@ void step(){
 }
 
 void drawSnake(){
-  tft.fillScreen(WHITE); // Clear the screen
+  //tft.fillScreen(WHITE); // Clear the screen
   point = game.getPoint();
   snake = game.getSnake();
   tft.fillCircle(point.first * scaleX, point.second* scaleY, 4, BLACK);
