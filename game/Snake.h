@@ -24,6 +24,7 @@ public:
     }
 
     // Aseta pistemäärä
+    // TODO: luo pistelasku
     void setScore(int newScore) {
         score =+ newScore;
     }
