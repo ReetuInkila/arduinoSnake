@@ -70,6 +70,13 @@ class LinkedList  {
       }
     }
 
+    bool isEmpty(){
+      if (length == 0){
+        return true;
+      }
+      return false;
+    }
+
     // Method to iterate through the list and apply a function to each element
     // TODO: Check whether the method is functional and secure
     class Iterator {

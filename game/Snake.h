@@ -40,18 +40,18 @@ public:
 
     // Siirrä käärmettä eli poista piste lopusta ja lisää alkuun
     Pair<int, int> moveSnake(int newX, int newY) {
-      //if (!coordinates.empty()) { 
-      //TODO: implement is empty method and check
-      if (newX == point.first && newY == point.second){
-        coordinates.insert(Pair<int, int>(newX, newY));
-        addPoint();
-        return Pair<int, int>(-1,-1);
-      }else {
-        coordinates.insert(Pair<int, int>(newX, newY));
-        Pair<int, int> last = coordinates.getLast();
-        coordinates.removeLast();
-        return last;
-      }
+        if (!coordinates.isEmpty()) { 
+            if (newX == point.first && newY == point.second){
+                coordinates.insert(Pair<int, int>(newX, newY));
+                addPoint();
+                return Pair<int, int>(-1,-1);
+            }else {
+                coordinates.insert(Pair<int, int>(newX, newY));
+                Pair<int, int> last = coordinates.getLast();
+                coordinates.removeLast();
+                return last;
+            }
+        }
     }
 
     // Function to get the snake's body as a list of coordinates
