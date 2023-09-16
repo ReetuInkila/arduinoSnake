@@ -10,6 +10,7 @@ public:
         // TODO: Make sure that coordinates are empty
         coordinates.insert(Pair<int, int> (x, y));
         addPoint();
+        delay = 500;
     }
 
     // Lisää uuden kerättävän pisteen
@@ -38,17 +39,24 @@ public:
         return score;
     }
 
+    int getDelay(){
+        return delay;
+    }
+
     // Siirrä käärmettä eli poista piste lopusta ja lisää alkuun
     Pair<int, int> moveSnake(int newX, int newY) {
+        
         if (!coordinates.isEmpty()) { 
             if (newX == point.first && newY == point.second){
                 coordinates.insert(Pair<int, int>(newX, newY));
                 addPoint();
+                delay = delay -10;
                 return Pair<int, int>(-1,-1);
             }else {
                 coordinates.insert(Pair<int, int>(newX, newY));
                 Pair<int, int> last = coordinates.getLast();
                 coordinates.removeLast();
+                delay = delay -1;
                 return last;
             }
         }
@@ -63,6 +71,7 @@ private:
     LinkedList<Pair<int, int>> coordinates; // Kordinaatit
     Pair<int, int> point; // pisteen kordinaatit
     int score; // Pistemäärä
+    int delay; //microsedonds between movements 
 
     // Tarkista, onko annettu kordinaatti jo käärmeen kordinaattien joukossa
     bool isCoordinateInSnake(int x, int y) {

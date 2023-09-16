@@ -26,6 +26,7 @@ int directionY = 0;
 Pair<int, int> point;
 LinkedList<Pair<int, int>> snake;
 Pair<int, int> removable = Pair<int, int>(-1,-1);
+int speed;
 
 // Screen settings, dimensions and scaling constants
 #define LCD_RESET 0 // Define the RESET pin number
@@ -78,7 +79,8 @@ void loop() {
     directionX = 0;
     directionY = -1;
   }
-  delay(500);
+  speed = game.getDelay();
+  delay(speed);
 
   step();
  
