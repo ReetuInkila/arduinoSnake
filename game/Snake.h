@@ -8,6 +8,9 @@ public:
 
     void start(int x, int y){
         // TODO: Make sure that coordinates are empty
+        if(!coordinates.isEmpty()){
+            coordinates.empty();
+        }
         coordinates.insert(Pair<int, int> (x, y));
         addPoint();
         delay = 500;
@@ -22,12 +25,6 @@ public:
         } while (isCoordinateInSnake(x, y));
 
         point = Pair<int, int> (x, y);
-    }
-
-    // Aseta pistemäärä
-    // TODO: luo pistelasku
-    void setScore(int newScore) {
-        score =+ newScore;
     }
 
     Pair<int, int> getPoint(){
@@ -50,13 +47,20 @@ public:
             if (newX == point.first && newY == point.second){
                 coordinates.insert(Pair<int, int>(newX, newY));
                 addPoint();
-                delay = delay -10;
+                if (delay > 100){
+                  delay = delay -5;
+                }
+                
+                score = score + round(500/delay)*10;
                 return Pair<int, int>(-1,-1);
             }else {
                 coordinates.insert(Pair<int, int>(newX, newY));
                 Pair<int, int> last = coordinates.getLast();
                 coordinates.removeLast();
-                delay = delay -1;
+                score = score + round(500/delay);
+                if (delay > 100){
+                  delay = delay -1;
+                }
                 return last;
             }
         }

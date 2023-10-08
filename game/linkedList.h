@@ -77,8 +77,15 @@ class LinkedList  {
       return false;
     }
 
-    // Method to iterate through the list and apply a function to each element
-    // TODO: Check whether the method is functional and secure
+    // Method to empty whole list
+    void empty(){
+      length = 0; 
+      head = nullptr; 
+      tail = nullptr; 
+      curr = nullptr;
+    }
+
+    // Method to iterate through the list
     class Iterator {
     private:
       ListNode<T>* current;
@@ -114,7 +121,7 @@ class LinkedList  {
     Iterator end() {
         return Iterator(nullptr);
     }
-    // TODO: Create method to empty whole list
+    
 
 };
 #endif // LinkedList_hpp

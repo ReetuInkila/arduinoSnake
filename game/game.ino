@@ -27,6 +27,7 @@ Pair<int, int> point;
 LinkedList<Pair<int, int>> snake;
 Pair<int, int> removable = Pair<int, int>(-1,-1);
 int speed;
+int score;
 
 // Screen settings, dimensions and scaling constants
 #define LCD_RESET 0 // Define the RESET pin number
@@ -57,9 +58,20 @@ void setup() {
   tft.begin(identifier);
   tft.fillScreen(WHITE); // Clear the screen
   tft.drawRect(0, 0, screenWidth, screenHeight, RED);
+  tft.setCursor(5, screenHeight + 20); // Set the cursor to the bottom-left corner (adjust as needed)
+  tft.setTextColor(BLACK);
+  tft.setTextSize(4); // Adjust the text size as needed
+  tft.print("Score:");
 }
 
 void loop() {
+  // Check if the switch is pressed
+  int switchState = digitalRead(SW_PIN);
+  if (switchState == HIGH) {
+    int locationX = 13;
+    int locationY = 13;
+    game.start(locationX,locationY);
+  }
   drawSnake();
 
   // read analog X and Y analog values
@@ -80,6 +92,7 @@ void loop() {
     directionY = -1;
   }
   speed = game.getDelay();
+  Serial.println(speed);
   delay(speed);
 
   step();
@@ -110,6 +123,7 @@ void drawSnake(){
 
   point = game.getPoint();
   snake = game.getSnake();
+  score = game.getScore();
   tft.fillCircle(point.first * scaleX, point.second* scaleY, 4, BLACK);
 
   for (const Pair<int, int>& coordinate : snake) {
@@ -119,15 +133,15 @@ void drawSnake(){
     // Calculate the screen coordinates based on the snake's coordinates and scaling factors
     int screenX = x * scaleX;
     int screenY = y * scaleY;
-    Serial.print(x);
-    Serial.println(y);
 
     // Draw a circle for each point of the snake's body
-    tft.fillCircle(screenX, screenY, 4, BLACK);
-    
+    tft.fillCircle(screenX, screenY, 4, BLACK); 
   }
-  
+  // Erase the previous score by filling a rectangle over it
+  tft.fillRect(140, screenHeight + 20 , screenWidth, 40, WHITE);
+  /// Draw the score at the bottom of the screen
+  tft.setCursor(150, screenHeight + 20); // Set the cursor to the bottom-left corner (adjust as needed)
+  tft.setTextColor(BLACK);
+  tft.setTextSize(4); // Adjust the text size as needed
+  tft.print(score); 
 }
-
-
- 
