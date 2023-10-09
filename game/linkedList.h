@@ -69,6 +69,11 @@ class LinkedList  {
         length--;
       }
     }
+    
+
+    int getLength(){
+      return length;
+    }
 
     bool isEmpty(){
       if (length == 0){
@@ -124,4 +129,4 @@ class LinkedList  {
     
 
 };
-#endif // LinkedList_hpp
+#endif

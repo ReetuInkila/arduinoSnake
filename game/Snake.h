@@ -7,13 +7,13 @@ public:
     Snake() : score(0) {}
 
     void start(int x, int y){
-        // TODO: Make sure that coordinates are empty
         if(!coordinates.isEmpty()){
             coordinates.empty();
         }
         coordinates.insert(Pair<int, int> (x, y));
         addPoint();
         delay = 500;
+        running = true;
     }
 
     // Lisää uuden kerättävän pisteen
@@ -23,7 +23,6 @@ public:
             x = random(26);
             y = random(26);
         } while (isCoordinateInSnake(x, y));
-
         point = Pair<int, int> (x, y);
     }
 
@@ -40,11 +39,24 @@ public:
         return delay;
     }
 
+    bool getState(){
+      return running;
+    }
+
+    bool chekFails(int x, int y){
+      for (const auto& coord : coordinates) {
+            if (coord.first == x && coord.second == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Siirrä käärmettä eli poista piste lopusta ja lisää alkuun
     Pair<int, int> moveSnake(int newX, int newY) {
         
         if (!coordinates.isEmpty()) { 
-            if (newX == point.first && newY == point.second){
+            if (newX == point.first && newY == point.second){// If point is eaten
                 coordinates.insert(Pair<int, int>(newX, newY));
                 addPoint();
                 if (delay > 100){
@@ -53,6 +65,10 @@ public:
                 
                 score = score + round(500/delay)*10;
                 return Pair<int, int>(-1,-1);
+            }else if(chekFails(newX, newY)){
+              running = false;
+              return Pair<int, int>(-2,-2);
+
             }else {
                 coordinates.insert(Pair<int, int>(newX, newY));
                 Pair<int, int> last = coordinates.getLast();
@@ -72,6 +88,7 @@ public:
     }
 
 private:
+    bool running;
     LinkedList<Pair<int, int>> coordinates; // Kordinaatit
     Pair<int, int> point; // pisteen kordinaatit
     int score; // Pistemäärä

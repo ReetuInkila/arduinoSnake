@@ -28,6 +28,7 @@ LinkedList<Pair<int, int>> snake;
 Pair<int, int> removable = Pair<int, int>(-1,-1);
 int speed;
 int score;
+bool running;
 
 // Screen settings, dimensions and scaling constants
 #define LCD_RESET 0 // Define the RESET pin number
@@ -65,6 +66,7 @@ void setup() {
 }
 
 void loop() {
+  
   // Check if the switch is pressed
   int switchState = digitalRead(SW_PIN);
   if (switchState == HIGH) {
@@ -91,12 +93,15 @@ void loop() {
     directionX = 0;
     directionY = -1;
   }
-  speed = game.getDelay();
-  Serial.println(speed);
-  delay(speed);
+  running = game.getState();
+  if (running){
+    speed = game.getDelay();
+    Serial.println(speed);
+    delay(speed);
+    step();
+  }else{
 
-  step();
- 
+  }
 }
 
 void step(){
