@@ -13,6 +13,7 @@ public:
         coordinates.insert(Pair<int, int> (x, y));
         addPoint();
         delay = 500;
+        score = 0;
         running = true;
     }
 

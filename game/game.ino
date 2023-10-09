@@ -12,6 +12,18 @@
 int xValue = 0; // To store value of the controller X axis
 int yValue = 0; // To store value of the controller Y axis
 
+// Screen settings, dimensions and scaling constants
+#define LCD_RESET 0 // Define the RESET pin number
+#define LCD_CS A3 // Chip Select goes to Analog 3
+#define LCD_CD A2 // Command/Data goes to Analog 2
+#define LCD_WR A1 // LCD Write goes to Analog 1
+#define LCD_RD A0 // LCD Read goes to Analog 0
+Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+
+#define	BLACK   0x0000
+#define	BLUE    0x001F
+#define	RED     0xF800
+#define WHITE   0xFFFF
 
 // Game variables
 Snake game;
@@ -30,50 +42,46 @@ int speed;
 int score;
 bool running;
 
-// Screen settings, dimensions and scaling constants
-#define LCD_RESET 0 // Define the RESET pin number
-#define LCD_CS A3 // Chip Select goes to Analog 3
-#define LCD_CD A2 // Command/Data goes to Analog 2
-#define LCD_WR A1 // LCD Write goes to Analog 1
-#define LCD_RD A0 // LCD Read goes to Analog 0
-Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
-
-#define	BLACK   0x0000
-#define	BLUE    0x001F
-#define	RED     0xF800
-#define WHITE   0xFFFF
-
 const int screenWidth = 240; // Pixels
 const int screenHeight = 240; // Pixels
 
 const int scaleX = screenWidth / d;
 const int scaleY = screenHeight / d;
 
-
-
-void setup() {
-  Serial.begin(9600) ;
+void startGame(){
   game.start(locationX,locationY);
-  tft.reset();
-  uint16_t identifier = tft.readID();
-  tft.begin(identifier);
   tft.fillScreen(WHITE); // Clear the screen
-  tft.drawRect(0, 0, screenWidth, screenHeight, RED);
+  tft.drawRect(0, 0, screenWidth, screenHeight, RED); // draw borders
   tft.setCursor(5, screenHeight + 20); // Set the cursor to the bottom-left corner (adjust as needed)
   tft.setTextColor(BLACK);
   tft.setTextSize(4); // Adjust the text size as needed
   tft.print("Score:");
 }
 
-void loop() {
-  
+void setup() {
+  Serial.begin(9600) ;
+  tft.reset();
+  uint16_t identifier = tft.readID();
+  tft.begin(identifier);
+  startGame();
+}
+
+void checkSwitch(){
   // Check if the switch is pressed
   int switchState = digitalRead(SW_PIN);
+  Serial.println(switchState);
   if (switchState == HIGH) {
     int locationX = 13;
     int locationY = 13;
-    game.start(locationX,locationY);
+    int directionX = 1;
+    int directionY = 0;
+    startGame();
   }
+}
+
+void loop() {
+  
+  checkSwitch();
   drawSnake();
 
   // read analog X and Y analog values
