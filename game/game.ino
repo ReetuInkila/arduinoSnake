@@ -12,28 +12,15 @@
 int xValue = 0; // To store value of the controller X axis
 int yValue = 0; // To store value of the controller Y axis
 
-// Screen settings, dimensions and scaling constants
-#define LCD_RESET 0 // Define the RESET pin number
-#define LCD_CS A3 // Chip Select goes to Analog 3
-#define LCD_CD A2 // Command/Data goes to Analog 2
-#define LCD_WR A1 // LCD Write goes to Analog 1
-#define LCD_RD A0 // LCD Read goes to Analog 0
-Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
-
-#define	BLACK   0x0000
-#define	BLUE    0x001F
-#define	RED     0xF800
-#define WHITE   0xFFFF
-
 // Game variables
 Snake game;
 const int d = 25;
-int locationX = 13;
-int locationY = 13;
-int prevLocX = 0; 
-int prevLocY = 0;
-int directionX = 1;
-int directionY = 0;
+int locationX;
+int locationY;
+int prevLocX; 
+int prevLocY;
+int directionX;
+int directionY;
 
 Pair<int, int> point;
 LinkedList<Pair<int, int>> snake;
@@ -42,13 +29,34 @@ int speed;
 int score;
 bool running;
 
-const int screenWidth = 240; // Pixels
+// Screen settings, dimensions and scaling constants
+#define LCD_RESET 0 // Define the RESET pin number
+#define LCD_CS A3 // Chip Select goes to Analog 3
+#define LCD_CD A2 // Command/Data goes to Analog 2
+#define LCD_WR A1 // LCD Write goes to Analog 1
+#define LCD_RD A0 // LCD Read goes to Analog 0
+Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+
+const int screenWidth = 240; // Pixels (GAME area)
 const int screenHeight = 240; // Pixels
 
 const int scaleX = screenWidth / d;
 const int scaleY = screenHeight / d;
 
+#define	BLACK   0x0000
+#define	BLUE    0x001F
+#define	RED     0xF800
+#define WHITE   0xFFFF
+
+
+// Function to start game
 void startGame(){
+  locationX = 13;
+  locationY = 13;
+  prevLocX = 0; 
+  prevLocY = 0;
+  directionX = 1;
+  directionY = 0;
   game.start(locationX,locationY);
   tft.fillScreen(WHITE); // Clear the screen
   tft.drawRect(0, 0, screenWidth, screenHeight, RED); // draw borders
@@ -56,6 +64,16 @@ void startGame(){
   tft.setTextColor(BLACK);
   tft.setTextSize(4); // Adjust the text size as needed
   tft.print("Score:");
+}
+
+bool checkSwitch(){
+  // Check if the switch is pressed
+  int switchState = digitalRead(SW_PIN);
+  Serial.println(switchState);
+  if (switchState == HIGH) {
+    return true;
+  }
+  return false;
 }
 
 void setup() {
@@ -66,22 +84,16 @@ void setup() {
   startGame();
 }
 
-void checkSwitch(){
-  // Check if the switch is pressed
-  int switchState = digitalRead(SW_PIN);
-  Serial.println(switchState);
-  if (switchState == HIGH) {
-    int locationX = 13;
-    int locationY = 13;
-    int directionX = 1;
-    int directionY = 0;
-    startGame();
+// Pauses game until switch is pressed
+void pause(){
+  while (!checkSwitch()){
+    delay(400);
   }
 }
 
 void loop() {
   
-  checkSwitch();
+  //checkSwitch();
   drawSnake();
 
   // read analog X and Y analog values
@@ -104,11 +116,11 @@ void loop() {
   running = game.getState();
   if (running){
     speed = game.getDelay();
-    Serial.println(speed);
     delay(speed);
     step();
   }else{
-
+    pause();
+    startGame();
   }
 }
 

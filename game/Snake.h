@@ -67,9 +67,8 @@ public:
                 score = score + round(500/delay)*10;
                 return Pair<int, int>(-1,-1);
             }else if(chekFails(newX, newY)){
-              running = false;
-              return Pair<int, int>(-2,-2);
-
+                running = false;
+                return Pair<int, int>(-2,-2);
             }else {
                 coordinates.insert(Pair<int, int>(newX, newY));
                 Pair<int, int> last = coordinates.getLast();
