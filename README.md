@@ -1,4 +1,5 @@
 # arduinoSnake
+This project represents my current c++ programming level very well
 
 Classic snake game. The goal of the game's development is to exceed the 
 program storage and memory of the Arduino uno board by implementing new features. 
