@@ -28,6 +28,7 @@ Pair<int, int> removable = Pair<int, int>(-1,-1);
 int speed;
 int score;
 bool running;
+int difficulty = 1;  // 1: Easy, 2: Intermediate, 3: Hard
 
 // Screen settings, dimensions and scaling constants
 #define LCD_RESET 0 // Define the RESET pin number
@@ -76,11 +77,57 @@ bool checkSwitch(){
   return false;
 }
 
+// Ask from user game difficulty from 1-3
+void selectDifficulty(){
+
+  while(true){
+    // read analog X and Y analog values
+    xValue = analogRead(VRX_PIN);
+    yValue = analogRead(VRY_PIN);
+    if (yValue>600){
+      break;
+    }
+    if(xValue < 600){
+      difficulty++;
+    }else if (xValue < 400){
+      difficulty--;
+    }
+    if (difficulty<1){
+      difficulty= 3;
+    }else if (difficulty > 3){
+      difficulty = 1;
+    }
+
+    tft.fillScreen(WHITE); // Clear the screen
+    tft.setCursor(5, screenHeight/2); // Set the cursor to the bottom-left corner (adjust as needed)
+    tft.setTextColor(BLACK);
+    tft.setTextSize(3); // Adjust the text size as needed
+    tft.print("Selected: ");
+    tft.setCursor(5, screenHeight/2 +30); // Set the cursor to the bottom-left corner (adjust as needed)
+    tft.print(getDifficultyString(difficulty));
+    delay(100);
+  }
+  tft.fillScreen(WHITE); // Clear the screen
+  
+}
+
+String getDifficultyString(int level) {
+  if (level == 1) {
+    return "Easy";
+  } else if (level == 2) {
+    return "Intermediate";
+  } else {
+    return "Hard";
+  }
+}
+
 void setup() {
   Serial.begin(9600) ;
   tft.reset();
   uint16_t identifier = tft.readID();
   tft.begin(identifier);
+
+  selectDifficulty();
   startGame();
 }
 
