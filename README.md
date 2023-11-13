@@ -8,7 +8,7 @@ After that, I want to analyze the code for areas of improvement.
 ## Possible future features
 - Starting screen whit game options
 - Game pausing
-- Game levels - [x]
+- Game levels :white_check_mark:
 - Alternative game modes (whit walls and whitout)
 - Saving leaderboard to sd-card 
 - Tests
