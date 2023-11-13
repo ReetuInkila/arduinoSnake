@@ -1,10 +1,8 @@
 #include "linkedList.h"
 #include "Pair.h"
-
-
 class Snake {
 public:
-    Snake() : score(0) {}
+    Snake::Snake() : score(0){}
 
     void start(int x, int y){
         if(!coordinates.isEmpty()){
@@ -29,6 +27,10 @@ public:
 
     Pair<int, int> getPoint(){
         return point;
+    }
+
+    void setDifficulty(int dif){
+        difficultyLevel = dif;
     }
 
     // Palauta pistemäärä
@@ -61,7 +63,7 @@ public:
                 coordinates.insert(Pair<int, int>(newX, newY));
                 addPoint();
                 if (delay > 100){
-                  delay = delay -5;
+                  delay = delay - 5*difficultyLevel;
                 }
                 
                 score = score + round(500/delay)*10;
@@ -75,7 +77,7 @@ public:
                 coordinates.removeLast();
                 score = score + round(500/delay);
                 if (delay > 100){
-                  delay = delay -1;
+                  delay = delay -difficultyLevel;
                 }
                 return last;
             }
@@ -93,6 +95,7 @@ private:
     Pair<int, int> point; // pisteen kordinaatit
     int score; // Pistemäärä
     int delay; //microsedonds between movements 
+    int difficultyLevel;
 
     // Tarkista, onko annettu kordinaatti jo käärmeen kordinaattien joukossa
     bool isCoordinateInSnake(int x, int y) {

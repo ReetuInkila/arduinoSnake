@@ -87,7 +87,7 @@ void selectDifficulty(){
     if (yValue>600){
       break;
     }
-    if(xValue < 600){
+    if(xValue > 600){
       difficulty++;
     }else if (xValue < 400){
       difficulty--;
@@ -108,6 +108,7 @@ void selectDifficulty(){
     delay(100);
   }
   tft.fillScreen(WHITE); // Clear the screen
+  game.setDifficulty(difficulty);
   
 }
 
