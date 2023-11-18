@@ -6,8 +6,6 @@ struct Pair {
     T1 first;
     T2 second;
     
-    Pair() {}
-    
     Pair(T1 f, T2 s) : first(f), second(s) {}
 };
 
